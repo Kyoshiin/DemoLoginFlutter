@@ -60,7 +60,7 @@ class RegScreen extends StatelessWidget {
                   ),
                 ),
 
-                //phn
+                //phn no
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: TextFormField(
