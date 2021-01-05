@@ -129,6 +129,7 @@ class LoginScreen extends StatelessWidget {
 
   checkSignIn() {
     if(_formkey.currentState.validate()) // validator
-        print('${_phnController.text}, ${_passwordController.text}');
+        print('Phone: ${_phnController.text}\n'
+            'Password: ${_passwordController.text}');
   }
 }
