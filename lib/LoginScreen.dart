@@ -1,23 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:second_app/Dashboard.dart';
 import 'package:second_app/RegScreen.dart';
+import 'package:second_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
-  // String name = '';
+
+  static const SCREEN_NAME = "@route-login";
 
   //fr FORM
   var _formkey = GlobalKey<
-      FormState>(); // key to uniquely identify a widget; also handles the state
+      FormState>();// key to uniquely identify a widget; also handles the state
+
+  final _sKey = GlobalKey<ScaffoldState>();
   TextEditingController _phnController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  static const mPhn = "7003052";
+  static const mPhn = "7003052870";
   static const mPs = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _sKey,
         backgroundColor: Colors.cyan[200],
         body: SingleChildScrollView(
           child: Form(
@@ -140,20 +146,37 @@ class LoginScreen extends StatelessWidget {
       String phn = _phnController.text;
       String ps = _passwordController.text;
 
-      if (phn.trim().isNotEmpty) {
+      if (phn.trim() == mPhn) {
         //success
-        print("inSuccess");
-        Scaffold.of(con).showSnackBar(
-          SnackBar(
-            content: Text('Login successful'),
+
+        _sKey.currentState.showSnackBar(SnackBar(
+          content: Text('Login successful'),
+          backgroundColor: Colors.cyan[800],
+          duration: Duration(
+            seconds: 3,
           ),
-        );
+        ));
+
+
+        // Scaffold.of(con).showSnackBar(
+        //   SnackBar(
+        //     content: Text('Login successful'),
+        //     backgroundColor: Colors.cyan[800],
+        //     duration: Duration(
+        //       seconds: 3,
+        //     ),
+        //   ),
+        // );
+
+        print("inSuccess");
 
         SharedPreferences sp = await SharedPreferences.getInstance();
-        await sp.setString('phone', phn.trim());
+        await sp.setString(FirstApp.KEY, phn.trim());
 
         //navigate
-        Navigator.of(con).pushReplacement(MaterialPageRoute(builder: (con) => RegScreen()));
+        // Navigator.of(con).push(MaterialPageRoute(builder: (con) => Dashboard()));
+
+        Navigator.pushReplacementNamed(con, Dashboard.SCREEN_NAME);
 
       } else {
         showDialog(
